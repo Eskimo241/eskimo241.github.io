@@ -179,14 +179,14 @@
         let zoom;
         let offsetX, offsetY;
 
-        const worker = new Worker('mandelbrot-worker.js');
+        const worker2 = new Worker('mandelbrot-worker.js');
 
-worker.onmessage = function(e) {
+worker2.onmessage = function(e) {
     ctx.putImageData(e.data, 0, 0);
 };
 
 function drawMandelbrot() {
-    worker.postMessage({
+    worker2.postMessage({
         width: canvas.width,
         height: canvas.height,
         offsetX: offsetX,
