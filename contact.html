@@ -179,7 +179,7 @@
         let zoom;
         let offsetX, offsetY;
 
-        const worker2 = new Worker('mandelbrot-worker.js');
+        const worker2 = new Worker('mandelbrot-worker2.js');
 
 worker2.onmessage = function(e) {
     ctx.putImageData(e.data, 0, 0);
