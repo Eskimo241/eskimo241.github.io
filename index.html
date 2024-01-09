@@ -1,1 +1,224 @@
-Hellow world !
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Website</title>
+    <style>
+        body {
+            overflow: hidden;
+            margin: 0;
+        }
+        .menu {
+            background-color: rgb(109, 14, 109);
+            overflow: hidden;
+            position: relative;
+            z-index: 3;
+        }
+        .menu a {
+            float: right;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 10px 50px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .menu a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        #mandelbrot {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .rounded-box {
+        position: absolute; /* Add this line */
+        top: 50%; /* Add this line */
+        left: 50%; /* Add this line */
+        transform: translate(-60%, -50%); /* Add this line */
+        width: 400px;
+        height: 400px;
+        background-color: #ddd;
+        border-radius: 10px;
+        margin: 20px;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: auto;
+        z-index: 1; /* Add this line */
+        cursor: pointer; /* Add this line */
+        }
+        
+        .mainText {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); 
+        z-index: 2; 
+        display: flex;
+        }
+
+        .mainText div {
+        margin: 300px;
+        }
+
+        @keyframes moveBack {
+            0% {
+                position: fixed;
+                transform: scale(1) rotate(0deg) translate(-50%, -50%);
+                opacity: 1;
+                }
+            100% {
+                position: fixed;
+                transform: scale(0.9) rotate(5deg) translate(-45%, -50%);
+                opacity: 0.5;
+                z-index: 2;
+                }
+        }
+
+        @keyframes moveFront {
+            0% {
+                position: fixed;
+                transform: scale(0.9) rotate(5deg) translate(-45%, -50%);
+                opacity: 0.5;
+            }
+            25% {
+                position: fixed;
+
+            }
+            50% {
+            }
+            75% {
+            }
+            100% {
+                position: fixed;
+                transform: scale(1) rotate(0deg) translate(-50%, -50%);
+                opacity: 1;
+                z-index: 4;
+            }
+        }
+
+        /* #Txt1 {
+        position: relative; 
+        top: 50%; 
+        left: 50%; 
+        transform: translate(-60%, -50%); 
+        width: 400px;
+        height: 400px;
+        background-color: #ddd;
+        border-radius: 10px;
+        margin: 20px;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: auto;
+        z-index: 1; 
+        cursor: pointer; 
+        }
+        #Txt2 {
+        position: relative; 
+        top: 50%; 
+        left: 50%; 
+        transform: translate(-60%, -50%); 
+        width: 400px;
+        height: 400px;
+        background-color: #ddd;
+        border-radius: 10px;
+        margin: 20px;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: auto;
+        z-index: 1; 
+        cursor: pointer; 
+        } */
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <a href="#contact">Contact Me</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#home">Home</a>
+    </div>
+
+
+        <div class="rounded-box" id="Txt1" onclick="bringToFront(document.getElementById('Txt2'),this)">
+            <h3>Hoy, moi c'est Nolan </h3>
+        </div>
+        <div class="rounded-box" id="Txt2" onclick="bringToFront(document.getElementById('Txt1'),this)">
+        <h3>text</h3>
+
+
+    </div>
+    
+    <canvas id="mandelbrot"></canvas>
+    <script>
+
+        function bringToFront (element, caller) {
+
+
+
+
+            caller.style.position = "fixed"; // Add this line
+           // caller.style.transform = "scale(0.9) rotate(5deg) translate(-45%, 50%)";
+            caller.style.animation = "moveBack 0.5s ease forwards";
+            element.style.transition = "all 0.5s ease"; // Add this line
+
+           // element.style.transform = "scale(1) rotate(0deg) translate(-50%, -50%)";
+            element.style.position = "fixed"; // Add this line
+            element.style.animation = "moveFront 0.5s ease forwards";
+
+
+            
+            
+        }
+
+        const canvas = document.getElementById('mandelbrot');
+        const ctx = canvas.getContext('2d');
+    
+        let zoom;
+        let offsetX, offsetY;
+
+        const worker = new Worker('mandelbrot-worker.js');
+
+worker.onmessage = function(e) {
+    ctx.putImageData(e.data, 0, 0);
+};
+
+function drawMandelbrot() {
+    worker.postMessage({
+        width: canvas.width,
+        height: canvas.height,
+        offsetX: offsetX,
+        offsetY: offsetY,
+        zoom: zoom
+    });
+}
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    offsetX = canvas.width / 1.9;
+    offsetY = canvas.height / 1.89;
+    zoom = Math.max(500 * window.innerWidth / 1920, 200);
+    drawMandelbrot();
+}
+
+window.onload = function() {
+resizeCanvas();
+bringToFront(document.getElementById('Txt1'),document.getElementById('Txt2'));
+}
+frameCounter = 0;
+const frameSkip = 10;
+window.onresize = function() {
+    frameCounter++;
+    if (frameCounter % frameSkip === 0) {
+        resizeCanvas();
+    }
+};
+    </script>
+</body>
+</html>
