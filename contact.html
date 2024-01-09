@@ -32,23 +32,24 @@
             left: 0;
         }
         .rounded-box {
-        position: absolute; /* Add this line */
-        top: 50%; /* Add this line */
-        left: 50%; /* Add this line */
-        transform: translate(-60%, -50%); /* Add this line */
-        width: 400px;
-        height: 400px;
-        background-color: #ddd;
-        border-radius: 10px;
-        margin: 20px;
-        padding: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: auto;
-        z-index: 1; /* Add this line */
-        cursor: pointer; /* Add this line */
-        }
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-60%, -50%);
+    width: 400px;
+    height: 400px;
+    background-color: #ddd;
+    border-radius: 10px;
+    margin: 20px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1;
+    cursor: pointer;
+}
         
         .mainText {
         position: absolute;
@@ -57,6 +58,7 @@
         transform: translate(-50%, -50%); 
         z-index: 2; 
         display: flex;
+        flex-direction: column;
         }
 
         .mainText div {
@@ -122,24 +124,24 @@
 
 
         <div class="rounded-box" id="Txt1" onclick="cycle(document.getElementById('Txt2'),document.getElementById('Txt3'),this)">
-            <h3>Hoy world!. moi c'est Nolan. A ce jour, je suis en première année de BUT R&T où j'y trouve mon bonheur. <p> Mon premier objectif pour l'instant c'est d'accéder à l'alternance, mais sur le long terme, je rêve de travailler dans la cybersécurité pour les satellites</p></h3>
-      <h4> <em>*cliquez pour mes passions*</em></h4>
+            <a href="https://www.linkedin.com/in/nolan-castelain/" target="_blank">
+            <img src="LinkedIn_icon.svg.png" alt="Linkedin" style="scale: 0.5;">
+            </a>
+            <p><h2>LinkedIn</h2></p>
         </div>
+        
         <div class="rounded-box" id="Txt2" onclick="cycle(document.getElementById('Txt3'),document.getElementById('Txt1'),this)">
-            <h3>Je sais que ça aura l'air d'un mensonge, mais ma passion principale c'est la programmation, et ma seconde passion c'est les Jeux Vidéos. Le langage avec lequel je suis le plus familié c'est C#, je l'utilise afin de développé un mod pour un jeu. <p>Python, JavaScript et C sont des langages que je connais et m'amuse à utiliser de temps en temps.</p> 
-            Delphi, Kotlin, ActionScript ou encore Assembleur sont des langages dont je connais les bases après avoir eu à faire avec eux lors de précédent projets <p>
-                D'ici quelque temps je vais me mettre a Java, et également m'essayer à lire les adresses mémoires.
-            </p> </h3>
-
+            <a href="https://github.com/Eskimo241"target="_blank">
+            <img src="github-mark.png" alt="GitHub Mark" style="scale: 0.5;" alt="GitHub">
+            
+        </a>
+        <p><h2>Github</h2></p>
         </div>
         <div class="rounded-box" id="Txt3" onclick="cycle(document.getElementById('Txt1'),document.getElementById('Txt2'),this)">
-            <h3>
-                Je trouve que les jeux et la programmation sont des passions qui se marie bien quand on y met de la cérativité entre les deux
-                <p>Prenons pas exemple Minecraft, j'aime bien ce jeu et je veux y ajouter ma touche personelle de créatif. Et pour cela je vais devoir apprendre le Java ainsi que le fonctionnement de Gradle</p>
-                <p>C'est ce que j'ai fait pour le C#, Delphi, JavaScript. Repspectivement pour Terraria, ProgressQuest (PQ) et Discord (bot)</p>
-                <p>Pour PQ j'ai également appris OpenCV Python pendant les vacances pour un projet d'automatisation (dispo Github) </p>
-            </h3>
-
+            <a href="mailto:nolan.castelain@etu.univ-cotedazur.fr" target="_blank"><img src="Microsoft_Office_Outlook_(2018–present).svg.png" alt="Mail" style="scale: 0.5;" alt="GitHub">
+            
+            </a>
+            <p><h2>Mail</h2></p>
         </div>
 
 
@@ -176,7 +178,6 @@
     
         let zoom;
         let offsetX, offsetY;
-        let colorcolor = [255,0,0,255];
 
         const worker = new Worker('mandelbrot-worker.js');
 
@@ -191,7 +192,7 @@ function drawMandelbrot() {
         offsetX: offsetX,
         offsetY: offsetY,
         zoom: zoom,
-        colorcolor : colorcolor
+        colorcolor : [0,255,0,255]
     });
 }
 
