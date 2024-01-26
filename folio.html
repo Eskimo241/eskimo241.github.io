@@ -19,36 +19,71 @@
         z-index: 4000;
         }
 
-        #image-track > .image {
+        #image-track > .image  {
         width: 40vmin;
         height: 56vmin;
         object-fit: cover;
         object-position: 100% center;
-        z-index: 4000;
         transform: skewX(-10deg); /* Adjust the angle as needed */
-        transition: 0.5s;
+        transition: 0.3s;
         }
 
-        #image-track > .image:hover {
+        .scroll-container > .image:hover {
         width: 47vmin;
 
-        transition: 0.5s ease;
+        transition: 0.53s ease;
         }
 
-        #image-track > #imageFirst {
+        .scroll-container >  #imageFirst {
             position: relative;
             left:5vmin;
             transform: skewX(0deg); /* Adjust the angle as needed */
 
             clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 0% 100%);
         }
-        #image-track > #imageLast {
+        .scroll-container>  #imageLast {
             position: relative;
             right:5vmin;
             transform: skewX(0deg); /* Adjust the angle as needed */
             clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
 
         }
+
+        .scroll-container > .image {
+        width: 40vmin;
+        height: 56vmin;
+        object-fit: cover;
+        object-position: 100% center;
+        transform: skewX(-10deg); /* Adjust the angle as needed */
+        transition: 0.3s;
+        }
+
+
+
+        .scroll-container > .image-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #f1f1f1;
+        font-size: 24px;
+        text-align: center;
+        z-index: 4001;
+        transition: 0.75s;
+        line-height: 2;
+        opacity: 0;
+        white-space: pre-line;
+        }
+
+        .scroll-container:hover .image-text {
+        opacity: 1;
+        transition: 0.75s;
+        }
+
+        .scroll-container {
+            position: relative;
+        }
+
 
 
 
@@ -81,6 +116,7 @@
 
 
 
+
     </style>
 </head>
 <body>
@@ -92,10 +128,23 @@
 
     </div>
     <div id="image-track" data-mouse-down-at="0" data-prev-percentage="0">
-            <img class="image" id="imageFirst" src="Comp 1000.jpg" draggable="false" />
-            <img class="image" id="image" src="Comp 10.jpg" draggable="false" />
 
+
+        <div class="scroll-container">
+            <img class="image" id="imageFirst" src="Comp 1000.jpg" draggable="false" />
+            <p class="image-text">Projet reconnaissance de texte avec OpenCV Python</p>
+        </div>
+
+
+        <div class="scroll-container">
+            <img class="image" id="image" src="Comp 10.jpg" draggable="false" />
+            <p class="image-text">Test</p>
+        </div>
+
+        <div class="scroll-container">
             <img class="image" id="imageLast" src="Comp 1000.jpg" draggable="false" />
+            <p class="image-text">Test</p>
+        </div>
 
     </div>
 
