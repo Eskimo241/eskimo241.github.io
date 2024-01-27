@@ -28,11 +28,7 @@
         transition: 0.3s;
         }
 
-        .scroll-container > .image:hover {
-        width: 47vmin;
 
-        transition: 0.53s ease;
-        }
 
         .scroll-container >  #imageFirst {
             position: relative;
@@ -60,7 +56,7 @@
 
 
 
-        .scroll-container > .image-text {
+        .scroll-container > .image-textLight {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -73,11 +69,49 @@
         line-height: 2;
         opacity: 0;
         white-space: pre-line;
+       
         }
 
-        .scroll-container:hover .image-text {
-        opacity: 1;
+
+
+        .scroll-container > .image-textDark {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #202020;
+        font-size: 24px;
+        text-align: center;
+        z-index: 4001;
         transition: 0.75s;
+        line-height: 2;
+        opacity: 0;
+        white-space: pre-line;
+       
+        }
+
+        .scroll-container:hover .image-textDark,
+        .scroll-container:hover .image-textLight {
+        opacity: 1;
+        animation: fadeIn 0.75s forwards;
+        }
+
+
+        .scroll-container:hover .image {
+        width: 47vmin;
+
+        transition: 0.53s ease;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0;}
+            27% {opacity: 0;}
+            100% {opacity: 1;}
+        }
+        @keyframes fadeOut {
+            0% { opacity: 100;}
+            73% {opacity: 0;}
+            100% {opacity: 0;}
         }
 
         .scroll-container {
@@ -98,7 +132,7 @@
             display: block;
             color: white;
             text-align: center;
-            padding: 10px 50px;
+            padding: 0.4vw 2vw;
             text-decoration: none;
             font-size: 18px;
         }
@@ -131,19 +165,21 @@
 
 
         <div class="scroll-container">
-            <img class="image" id="imageFirst" src="Comp 1000.jpg" draggable="false" />
-            <p class="image-text">Projet reconnaissance de texte avec OpenCV Python</p>
+            
+                <img class="image" id="imageFirst" src="Comp 1000.jpg" draggable="false" />
+            
+            <a href="pythonOpenCV.html" style="text-decoration: none;"class="image-textLight">Projet reconnaissance de texte avec OpenCV Python</a>
         </div>
 
 
         <div class="scroll-container">
             <img class="image" id="image" src="Comp 10.jpg" draggable="false" />
-            <p class="image-text">Test</p>
+            <a href="#LinkedIn" style="text-decoration: none;"class="image-textDark">Test</a>
         </div>
 
         <div class="scroll-container">
             <img class="image" id="imageLast" src="Comp 1000.jpg" draggable="false" />
-            <p class="image-text">Test</p>
+            <a href="#WIP" style="text-decoration: none;"class="image-textLight">WIP</a>
         </div>
 
     </div>
