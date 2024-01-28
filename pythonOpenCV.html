@@ -9,8 +9,6 @@
             background-color: #1e0c30;
         }
 
-
-
         .menu {
             background-color: rgb(109, 14, 109);
             overflow: hidden;
@@ -46,10 +44,66 @@
             font-size: 24px;
         }
 
+        .main {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+
+        }
+        .rounded-div {
+            position: relative;
+            width: 49vw;
+            height: 43vw;
+            border-radius: 20px;
+            margin: 0.5vw;
+            margin-top: 1vw;
+        }
+
+        .rounded-div p {
+            margin: 0.5vw;
+            margin-top: 1vw;
+            font-size: 24px;
+
+        }
+        #right {
+            position: relative;
+            left:0%;
+            background-color: rgb(255, 255, 255);
+            font-size: 26px;
+            color: #351258;
+            
 
 
 
 
+        }
+
+        .video-container {
+            position: relative;
+            width: 48vw;
+            height: 26vw;
+            border-radius: 20px;
+            margin: 0.5vw;
+            margin-top: 0.75vw;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 48vw;
+            height: 27.6vw;
+        }
+
+        #left {
+            background-color: #0b0413;
+            font-size: 26px;
+            color: #fdfcff;
+        }
     </style>
 </head>
 <body>
@@ -58,12 +112,46 @@
         <a href="https://github.com/Eskimo241">Github</a>
         <a href="#portfolio">Portfolio</a>
         <a href="https://eskimo241.github.io">Home</a>
-
     </div>
 
     <div class="back">
-        <a href="folio.html" >&#8592; Portfolio</a>
+        <a href="folio.html" >&#8592; Revenir au Portfolio</a>
     </div>
+
+    <div class="main">
+        <div class="rounded-div" id="left">
+            <p>	Je programme occasionnellement en Python en dehors 
+            </p>
+            <p>des cours depuis la première.
+            </p>
+            <p>Mon projet le plus récent avait pour but la découverte 
+            </p>
+            <p>du module OpenCV et Tesseract.
+            </p> <br>
+            <p>L’objectif du script étant de localiser un certain texte 
+            </p>
+            <p>« Total » en récupérant les pixels via OpenCV et en 
+            </p>
+            <p>lisant ce qui y est écrit avec Tesseract. Pour renvoyer </p>
+            <p>une délimitation d’où le programme doit ensuite regarder pour l’automatisation
+            </p>
+        </div>
+        <div class="rounded-div" id="right">
+            <div class="video-container">
+                <iframe loading="lazy" title="Not Done Yet" src="https://www.youtube.com/embed/bJieaH23524?list=RDe9RVh2bXA8M&modestbranding=1&rel=0" frameborder="0" allowfullscreen>
+                    Embedded not supported on your browser
+                </iframe>
+            </div>
+            <p>Première vidéo faisant partie d'une série où j'y explique le code en le réécrivant (WIP, faire une vidéo sans la matos c'est pas évident)</p>
+
+        </div>
+
+        <script>
+
+        </script>
+        </body>
+        </html>
+
 
 
 
