@@ -184,58 +184,46 @@
       <h4> <em>*cliquez pour mes passions*</em></h4>
         </div>
         <div class="rounded-box" id="Txt2" onclick="cycle(document.getElementById('Txt3'),document.getElementById('Txt1'),this)">
-            <h3>Je sais que ça aura l'air d'un mensonge, mais ma passion principale c'est la programmation, et ma seconde passion c'est les Jeux Vidéos. Le langage avec lequel je suis le plus familié c'est C#, je l'utilise afin de développé un mod pour un jeu. <p>Python, JavaScript et C sont des langages que je connais et m'amuse à utiliser de temps en temps.</p> 
-            Delphi, Kotlin, ActionScript ou encore Assembleur sont des langages dont je connais les bases après avoir eu à faire avec eux lors de précédent projets <p>
-                D'ici quelque temps je vais me mettre a Java, et également m'essayer à lire les adresses mémoires.
-            </p> </h3>
+            <h3>Python, JavaScript et C sont des langages que je connais et m'amuse à utiliser de temps en temps.
+                Delphi, Kotlin, ActionScript ou encore Assembleur sont des langages dont je connais les bases après avoir eu à faire avec eux lors de précédent projets
+            </h3>
 
         </div>
         <div class="rounded-box" id="Txt2L">
             <h3>
-                Je trouve que les jeux et la programmation sont des passions qui se marie bien quand on y met de la créativité entre les deux
-                <p>Prenons pas exemple Minecraft, j'aime bien ce jeu et je veux y ajouter ma touche personelle de créatif. Et pour cela je vais devoir apprendre le Java ainsi que le fonctionnement de Gradle</p>
-                <p>C'est ce que j'ai fait pour le C#, Delphi, JavaScript. Repspectivement pour Terraria, ProgressQuest (PQ) et Discord (bot)</p>
-                <p>Pour PQ j'ai également appris OpenCV Python pendant les vacances pour un projet d'automatisation (dispo Github) </p>
+                Je sais que ça aura l'air d'un mensonge, mais ma passion principale c'est la programmation, et ma seconde passion c'est les jeux vidéos. 
+                Le langage avec lequel je suis le plus familier c'est C#, je l'utilise afin de développer un mod pour un jeu.
+                
             </h3>
 
         </div>
         <div class="rounded-box" id="Txt2R" >
             <h3>
-                Je trouve que les jeux et la programmation sont des passions qui se marie bien quand on y met de la créativité entre les deux
-                <p>Prenons pas exemple Minecraft, j'aime bien ce jeu et je veux y ajouter ma touche personelle de créatif. Et pour cela je vais devoir apprendre le Java ainsi que le fonctionnement de Gradle</p>
-                <p>C'est ce que j'ai fait pour le C#, Delphi, JavaScript. Repspectivement pour Terraria, ProgressQuest (PQ) et Discord (bot)</p>
-                <p>Pour PQ j'ai également appris OpenCV Python pendant les vacances pour un projet d'automatisation (dispo Github) </p>
+                D'ici quelque temps je vais me mettre à Java, et également m'essayer à lire les adresses mémoires.
             </h3>
 
         </div>
-        <div class="rounded-box" id="Txt3R" >
-            <h3>
-                Je trouve que les jeux et la programmation sont des passions qui se marie bien quand on y met de la créativité entre les deux
-                <p>Prenons pas exemple Minecraft, j'aime bien ce jeu et je veux y ajouter ma touche personelle de créatif. Et pour cela je vais devoir apprendre le Java ainsi que le fonctionnement de Gradle</p>
-                <p>C'est ce que j'ai fait pour le C#, Delphi, JavaScript. Repspectivement pour Terraria, ProgressQuest (PQ) et Discord (bot)</p>
-                <p>Pour PQ j'ai également appris OpenCV Python pendant les vacances pour un projet d'automatisation (dispo Github) </p>
-            </h3>
 
-        </div>
         <div class="rounded-box" id="Txt3" onclick="cycle(document.getElementById('Txt1'),document.getElementById('Txt2'),this)">
             <h3>
-                Je trouve que les jeux et la programmation sont des passions qui se marie bien quand on y met de la créativité entre les deux
-                <p>Prenons pas exemple Minecraft, j'aime bien ce jeu et je veux y ajouter ma touche personelle de créatif. Et pour cela je vais devoir apprendre le Java ainsi que le fonctionnement de Gradle</p>
-                <p>C'est ce que j'ai fait pour le C#, Delphi, JavaScript. Repspectivement pour Terraria, ProgressQuest (PQ) et Discord (bot)</p>
-                <p>Pour PQ j'ai également appris OpenCV Python pendant les vacances pour un projet d'automatisation (dispo Github) </p>
+                Prenons par exemple Minecraft, j'aime bien ce jeu et je veux y ajouter ma touche personnelle de créatif. Et pour cela je vais devoir apprendre le Java ainsi que le fonctionnement de Gradle
             </h3>
 
         </div>
         <div class="rounded-box" id="Txt3L" >
             <h3>
                 Je trouve que les jeux et la programmation sont des passions qui se marie bien quand on y met de la créativité entre les deux
-                <p>Prenons pas exemple Minecraft, j'aime bien ce jeu et je veux y ajouter ma touche personelle de créatif. Et pour cela je vais devoir apprendre le Java ainsi que le fonctionnement de Gradle</p>
-                <p>C'est ce que j'ai fait pour le C#, Delphi, JavaScript. Repspectivement pour Terraria, ProgressQuest (PQ) et Discord (bot)</p>
-                <p>Pour PQ j'ai également appris OpenCV Python pendant les vacances pour un projet d'automatisation (dispo Github) </p>
             </h3>
 
         </div>
 
+        <!--Yeah most useful change, just brought it back down alongside his brother 3L-->
+        <div class="rounded-box" id="Txt3R" >
+            <h3>
+                C'est ce que j'ai fait pour le C#, Delphi, JavaScript. Respectivement pour Terraria, Progress Quest (PQ) et Discord (bot)
+            </h3>
+
+        </div>
         
 
 
@@ -250,10 +238,19 @@
             
             switch(front.id) {
                 case "Txt2":
+
+                txt2L.style.display = 'flex';
+                txt2R.style.display = 'flex';
+
+
                 txt2L.style.animation = "rotateFL 0.75s ease forwards";
                 txt2R.style.animation = "rotateFR 0.75s ease forwards";
                     break;
                 case "Txt3":
+                txt3L.style.display = 'flex';
+                txt3R.style.display = 'flex';
+
+
                 txt2L.style.animation = "rotateBL 0.75s ease forwards";
                 txt2R.style.animation = "rotateBR 0.75s ease forwards";
                 txt3L.style.animation = "rotateFL 0.75s ease forwards";
@@ -264,7 +261,14 @@
                         txt3L.style.animation = "rotateBL 0.75s ease forwards";
                         txt3R.style.animation = "rotateBR 0.75s ease forwards";
                     }
-                    else load =1;
+                    else {
+                        load =1;
+                        //fixing broken loading animation
+                        txt3L.style.display = 'none';
+                        txt3R.style.display = 'none';
+                        txt2L.style.display = 'none';
+                        txt2R.style.display = 'none';
+                    }
                     break;
             }
 
@@ -283,7 +287,7 @@
             front.style.position = "fixed"; // Add this line
             front.style.animation = "moveFront 0.5s ease forwards";
 
-            //TODO: ON SECOND AND THIRD CARDS, ADD TWO CARDS COMING TO THE LEFT AND RIGHT ROTATING
+            //DONE :) TODO: ON SECOND AND THIRD CARDS, ADD TWO CARDS COMING TO THE LEFT AND RIGHT ROTATING 
             //TODO: BACKGROUND : TRIANGLE/PRISM WEBGL; ROTATING WHEN CYCLING CARDS; COLOR = GREEN-YELLOW
 
             
@@ -324,15 +328,17 @@ function resizeCanvas() {
 }
 
 window.onload = function() {
+//Initializing side texts for easier use
 txt2L = document.getElementById('Txt2L');
 txt2R = document.getElementById('Txt2R');
 txt3L = document.getElementById('Txt3L');
 txt3R = document.getElementById('Txt3R');
-load = 0;
+load = 0; //To prevent some animations because we're kinda cheating 
 
 resizeCanvas();
-cycle(document.getElementById('Txt1'),document.getElementById('Txt2'),document.getElementById('Txt3'))
-}
+cycle(document.getElementById('Txt1'),document.getElementById('Txt2'),document.getElementById('Txt3')); //Cheating because it would look horrible without it
+};      
+
 frameCounter = 0;
 const frameSkip = 10;
 window.onresize = function() {
