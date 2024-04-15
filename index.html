@@ -110,6 +110,62 @@
             }
         }
 
+                
+        @keyframes rotateFL{
+    0% {
+        transform-origin: -300% 0%;
+        transform: rotate(-180deg) translate(-175%, -50%);
+    }
+    100% {
+        transform-origin: -300% 0%;
+        transform: rotate(0deg) translate(-175%, -50%);
+    }
+}
+@keyframes rotateBL{
+    0% {
+        transform-origin: -300% 0%;
+        transform: rotate(0deg) translate(-175%, -50%);
+    }
+    100% {
+        transform-origin: -300% 0%;
+        transform: rotate(180deg) translate(-175%, -50%);
+    }
+}
+        
+@keyframes rotateFR{
+    0% {
+        transform-origin: 300% 0%;
+        transform: rotate(-180deg) translate(78%, -50%);
+    }
+    100% {
+        transform-origin: 300% 0%;
+        transform: rotate(0deg) translate(78%, -50%);
+    }
+}
+@keyframes rotateBR{
+    0% {
+        transform-origin: 300% 0%;
+        transform: rotate(0deg) translate(78%, -50%);
+    }
+    100% {
+        transform-origin: 300% 0%;
+        transform: rotate(180deg) translate(78%, -50%);
+    }
+}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
     </style>
 </head>
 <body>
@@ -134,6 +190,33 @@
             </p> </h3>
 
         </div>
+        <div class="rounded-box" id="Txt2L">
+            <h3>
+                Je trouve que les jeux et la programmation sont des passions qui se marie bien quand on y met de la créativité entre les deux
+                <p>Prenons pas exemple Minecraft, j'aime bien ce jeu et je veux y ajouter ma touche personelle de créatif. Et pour cela je vais devoir apprendre le Java ainsi que le fonctionnement de Gradle</p>
+                <p>C'est ce que j'ai fait pour le C#, Delphi, JavaScript. Repspectivement pour Terraria, ProgressQuest (PQ) et Discord (bot)</p>
+                <p>Pour PQ j'ai également appris OpenCV Python pendant les vacances pour un projet d'automatisation (dispo Github) </p>
+            </h3>
+
+        </div>
+        <div class="rounded-box" id="Txt2R" >
+            <h3>
+                Je trouve que les jeux et la programmation sont des passions qui se marie bien quand on y met de la créativité entre les deux
+                <p>Prenons pas exemple Minecraft, j'aime bien ce jeu et je veux y ajouter ma touche personelle de créatif. Et pour cela je vais devoir apprendre le Java ainsi que le fonctionnement de Gradle</p>
+                <p>C'est ce que j'ai fait pour le C#, Delphi, JavaScript. Repspectivement pour Terraria, ProgressQuest (PQ) et Discord (bot)</p>
+                <p>Pour PQ j'ai également appris OpenCV Python pendant les vacances pour un projet d'automatisation (dispo Github) </p>
+            </h3>
+
+        </div>
+        <div class="rounded-box" id="Txt3R" >
+            <h3>
+                Je trouve que les jeux et la programmation sont des passions qui se marie bien quand on y met de la créativité entre les deux
+                <p>Prenons pas exemple Minecraft, j'aime bien ce jeu et je veux y ajouter ma touche personelle de créatif. Et pour cela je vais devoir apprendre le Java ainsi que le fonctionnement de Gradle</p>
+                <p>C'est ce que j'ai fait pour le C#, Delphi, JavaScript. Repspectivement pour Terraria, ProgressQuest (PQ) et Discord (bot)</p>
+                <p>Pour PQ j'ai également appris OpenCV Python pendant les vacances pour un projet d'automatisation (dispo Github) </p>
+            </h3>
+
+        </div>
         <div class="rounded-box" id="Txt3" onclick="cycle(document.getElementById('Txt1'),document.getElementById('Txt2'),this)">
             <h3>
                 Je trouve que les jeux et la programmation sont des passions qui se marie bien quand on y met de la créativité entre les deux
@@ -143,6 +226,17 @@
             </h3>
 
         </div>
+        <div class="rounded-box" id="Txt3L" >
+            <h3>
+                Je trouve que les jeux et la programmation sont des passions qui se marie bien quand on y met de la créativité entre les deux
+                <p>Prenons pas exemple Minecraft, j'aime bien ce jeu et je veux y ajouter ma touche personelle de créatif. Et pour cela je vais devoir apprendre le Java ainsi que le fonctionnement de Gradle</p>
+                <p>C'est ce que j'ai fait pour le C#, Delphi, JavaScript. Repspectivement pour Terraria, ProgressQuest (PQ) et Discord (bot)</p>
+                <p>Pour PQ j'ai également appris OpenCV Python pendant les vacances pour un projet d'automatisation (dispo Github) </p>
+            </h3>
+
+        </div>
+
+        
 
 
     </div>
@@ -152,6 +246,27 @@
 
         function cycle (front,mid, back) {
 
+            console.log(front.id)
+            
+            switch(front.id) {
+                case "Txt2":
+                txt2L.style.animation = "rotateFL 0.75s ease forwards";
+                txt2R.style.animation = "rotateFR 0.75s ease forwards";
+                    break;
+                case "Txt3":
+                txt2L.style.animation = "rotateBL 0.75s ease forwards";
+                txt2R.style.animation = "rotateBR 0.75s ease forwards";
+                txt3L.style.animation = "rotateFL 0.75s ease forwards";
+                txt3R.style.animation = "rotateFR 0.75s ease forwards";
+                    break;
+                default:
+                    if (load==1){
+                        txt3L.style.animation = "rotateBL 0.75s ease forwards";
+                        txt3R.style.animation = "rotateBR 0.75s ease forwards";
+                    }
+                    else load =1;
+                    break;
+            }
 
 
 
@@ -209,6 +324,12 @@ function resizeCanvas() {
 }
 
 window.onload = function() {
+txt2L = document.getElementById('Txt2L');
+txt2R = document.getElementById('Txt2R');
+txt3L = document.getElementById('Txt3L');
+txt3R = document.getElementById('Txt3R');
+load = 0;
+
 resizeCanvas();
 cycle(document.getElementById('Txt1'),document.getElementById('Txt2'),document.getElementById('Txt3'))
 }
