@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"></script>
+
     <title>Nolan Castelain's website</title>
     <style>
         body {
@@ -118,6 +120,12 @@
             position: relative;
         }
 
+        #webgl-cube {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
 
 
 
@@ -140,12 +148,7 @@
             background-color: #ddd;
             color: black;
         }
-        #mandelbrot {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 0;
-        }
+
 
 
 
@@ -180,63 +183,31 @@
 
         <div class="scroll-container">
             <img class="image" id="imageLast" src="Comp 1000.jpg" draggable="false" />
-            <a href="#WIP" style="text-decoration: none;"class="image-textLight">WIP</a>
+            <a href="thales.html" style="text-decoration: none;"class="image-textLight">WIP</a>
         </div>
 
     </div>
 
 
 
-    <canvas id="mandelbrot"></canvas>
+    <canvas id="webgl-cube"></canvas>
+    <script src="cubegl.js"></script>
     <script>
 
 
 
 
 
-        const canvas = document.getElementById('mandelbrot');
-        const ctx = canvas.getContext('2d');
 
-        let zoom;
-        let offsetX, offsetY;
-        //yeah github page has issues with scripted color change, so I gotta make 3 different workers
-        const worker2 = new Worker('mandelbrot-worker3.js');
 
-worker2.onmessage = function(e) {
-   ctx.putImageData(e.data, 0, 0);
-};
 
-function drawMandelbrot() {
-    worker2.postMessage({
-        width: canvas.width,
-        height: canvas.height,
-        offsetX: offsetX,
-        offsetY: offsetY,
-        zoom: zoom,
-        colorcolor : [0,255,0,255]
-    });
-}
 
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    offsetX = canvas.width / 1.9;
-    offsetY = canvas.height / 1.89;
-    zoom = Math.max(500 * window.innerWidth / 1920, 200);
-    drawMandelbrot();
-}
 
 window.onload = function() {
 resizeCanvas();
 }
-frameCounter = 0;
-const frameSkip = 10;
-window.onresize = function() {
-    frameCounter++;
-    if (frameCounter % frameSkip === 0) {
-        resizeCanvas();
-    }
-};
+
+
 
 const track = document.getElementById("image-track");
 

@@ -37,7 +37,7 @@
             top: 0;
             left: 0;
         }
-        .rounded-box { /* TODO: Colorer les contours selon RBG CMY; Mais comment + Mieux Utiliser l'espace text */
+        .rounded-box { /* + Mieux Utiliser l'espace text */
         position: absolute; 
         top: 50%; 
         left: 50%; 
@@ -65,10 +65,11 @@
         .rounded-box:before {
     content: "";
     position: absolute;
-    top: 0; /* change this line */
-    right: 0; /* change this line */
-    bottom: 0; /* change this line */
-    left: 0; /* change this line */
+    top: 0; 
+    right: 0; 
+    bottom: 0; 
+    left: 0; 
+
     background: linear-gradient(45deg, red, yellow, lime, aqua, blue, magenta, red);
     border-radius: inherit;
     z-index: -1;
@@ -80,10 +81,11 @@
     top: 2px;
     right: 2px;
     bottom: 2px;
+
     left: 2px;
-    background: #fff; /* change this line */
+    background: #fff; 
     border-radius: inherit;
-    z-index: 2; /* change this line */
+    z-index: 2; 
 }
 
         @media screen and (max-height: 768px) {
