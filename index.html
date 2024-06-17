@@ -5,6 +5,10 @@
 
     <title>Nolan Castelain's website</title>
     <style>
+        :root {
+    --color1: rgb(109, 14, 109);
+    --color2: rgb(255, 0, 0);
+}
         h3 {
             z-index: 5;
         }
@@ -12,12 +16,16 @@
             overflow: hidden;
             margin: 0;
         }
+        
+
         .menu {
-            background-color: rgb(109, 14, 109);
+            background: linear-gradient(to right, var(--color1), var(--color2));
             overflow: hidden;
+            background-size: 200% 200%;
             position: relative;
             z-index: 3;
         }
+ 
         .menu a {
             float: right;
             display: block;
@@ -221,9 +229,9 @@
 <body>
     <div class="menu">
         <a href="contact.html">Me contacter</a>
+        <a href="passion.html">Mes passions</a>
         <a href="https://github.com/Eskimo241">Github</a>
         <a href="folio.html">Portfolio</a>
-        <a href="passion.html">Mes passions</a>
         <a href="https://eskimo241.github.io">Home</a>
     </div>
 
@@ -281,8 +289,20 @@
     <canvas id="webgl-cube"></canvas>
     <script src="cubegl.js"></script>
     <script>
+        var colors = [
+    ['rgb(255, 0, 0)', 'rgb(0, 255, 0)'],
+    ['rgb(0, 255, 0)', 'rgb(0, 0, 255)'],
+    ['rgb(0, 0, 255)', 'rgb(109, 14, 109)']
+];
+
+        var i = 0
+
+
 
         function cycle (front,mid, back) {
+            document.documentElement.style.setProperty('--color1', colors[i][0]);
+            document.documentElement.style.setProperty('--color2', colors[i][1]);
+            i = (i + 1) % colors.length;
 
             console.log(front.id)
             
