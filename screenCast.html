@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Projet Screen Cast (Python)</title>
+    <style>
+        body {
+            overflow: hidden;
+            margin: 0;
+            background-color: #1e0c30;
+        }
+
+        .menu {
+            background-color: rgb(109, 14, 109);
+            overflow: hidden;
+            position: relative;
+            z-index: 3;
+        }
+        .menu a {
+            float: right;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 0.4vw 2vw;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .menu a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .back {
+            background-color: #351258;
+            position: sticky;
+            z-index: 40;
+            overflow: hidden;
+            width: 100%;
+            height: 5%;
+            padding: 0.5vw ;
+        }
+        .back a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+        }
+
+        .main {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+
+        }
+        .rounded-div {
+            position: relative;
+            width: 49vw;
+            height: 43vw;
+            border-radius: 20px;
+            margin: 0.5vw;
+            margin-top: 1vw;
+        }
+
+        .rounded-div p {
+            margin: 0.5vw;
+            margin-top: 1vw;
+            font-size: 24px;
+
+        }
+        #right {
+            position: relative;
+            left:0%;
+            background-color: rgb(255, 255, 255);
+            font-size: 26px;
+            color: #351258;
+            
+
+
+
+
+        }
+
+        .video-container {
+            position: relative;
+            width: 48vw;
+            height: 26vw;
+            border-radius: 20px;
+            margin: 0.5vw;
+            margin-top: 0.75vw;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 48vw;
+            height: 27.6vw;
+        }
+
+        #left {
+            background-color: #0b0413;
+            font-size: 26px;
+            color: #fdfcff;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <a href="contact.html">Me contacter</a>
+        <a href="passion.html">Mes passions</a>
+        <a href="https://github.com/Eskimo241">Github</a>
+        <a href="folio.html">Portfolio</a>
+        <a href="index.html">Home</a>
+    </div>
+
+    <div class="back">
+        <a href="folio.html" >&#8592; Revenir au Portfolio</a>
+    </div>
+    
+    <div class="main">
+        <div class="rounded-div" id="left">
+            <p>Nous avons eu l'ocasion de travailler en groupe réduit, dans notre cas 4 personnes, sur un projet de site web en collaboration avec Thales Alenia Space
+            </p>
+            <p>Ce projet avais pour objectif principal de réaliser un site relié à une base de données pour recenser différentes bonnes pratiques pour le service de vérification avionique.
+            </p>
+            <p>Nous avions comme exigences de pouvoir créer, modifier, duppliquer et supprimer ces bonnes pratique. Mais également de pouvoir les triers et filtrer selon plusieurs critères auquels sont associé ces bonnes pratiques. Pour enfin télécharger un pdf ou fichier excel avec les filtrages.
+            </p>
+            <p>Et enfin avoir des comptes utilisateurs avec des accès plus ou moins de droits d'administration, comme la capacité de modififer le mot de passe d'un opérateur, modifier les caractéristiques nécessaire d'un mot de passe et (dé)bloquer un opérateur.
+            </p>
+        </div>
+        <div class="rounded-div" id="right">
+            <div class="CaptureScroller">
+                {WIP ScreenshotScroller}
+            </div>
+            <p>Quelque captures d'écrans de notre site pour le projet CHECKLIST</p>
+
+        </div>
+
+        <script>
+
+        </script>
+        </body>
+        </html>
+
+
+
+
+    <script>
+
+    </script>
+</body>
+</html>

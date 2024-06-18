@@ -71,7 +71,7 @@
         line-height: 2;
         opacity: 0;
         white-space: pre-line;
-       
+
         }
 
 
@@ -89,7 +89,7 @@
         line-height: 2;
         opacity: 0;
         white-space: pre-line;
-       
+
         }
 
         .scroll-container:hover .image-textDark,
@@ -149,6 +149,71 @@
             color: black;
         }
 
+        .toggle-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            padding: 0px 0px;
+            z-index: 100;
+            background-color: #0000;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        .toggleText {
+            align-self: center;
+            margin : 0 10px;
+            color: white;
+        }
+
 
 
 
@@ -164,12 +229,22 @@
         <a href="folio.html">Portfolio</a>
         <a href="index.html">Home</a>
     </div>
+<!-- TODO, when toggling, transition animation from foreground main projects going far in the distance, and mini coming foreground -->
+    <div class="toggle-container">
+        <span class="toggleText">Projets principaux</span>
+        <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+        </label>
+        <span class="toggleText">Mini projets</span>
+    </div>
+
     <div id="image-track" data-mouse-down-at="0" data-prev-percentage="0">
 
 
         <div class="scroll-container">
-            
-            <img class="image" id="imageFirst" src="Comp 1000.jpg" draggable="false" /> 
+
+            <img class="image" id="imageFirst" src="Comp 1000.jpg" draggable="false" />
             <a href="pythonOpenCV.html" style="text-decoration: none;"class="image-textLight" draggable="false">Projet reconnaissance de texte avec OpenCV Python</a>
         </div>
 
@@ -181,11 +256,11 @@
 
         <div class="scroll-container">
             <img class="image" id="image" src="Comp 10000.png" draggable="false" />
-            <a href="thales.html" style="text-decoration: none;"class="image-textLight">ThalesWIP</a>
+            <a href="thales.html" style="text-decoration: none;"class="image-textLight">Projet Checklist Thales</a>
         </div>
         <div class="scroll-container">
             <img class="image" id="image" src="Comp 1000.jpg" draggable="false" />
-            <a href="#WIP" style="text-decoration: none;"class="image-textLight">ThalesWIP</a>
+            <a href="#WIP" style="text-decoration: none;"class="image-textLight">SAE22WIP</a>
         </div>
 
         <div class="scroll-container">
@@ -211,8 +286,13 @@
 
 
 window.onload = function() {
-resizeCanvas();
+    var checkbox = document.querySelector('.switch input[type="checkbox"]');
+    checkbox.addEventListener('change', function(){
+        if (this.checked){            
+            window.location.href = "folio2.html";
 }
+
+    })}
 
 
 

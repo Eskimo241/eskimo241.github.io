@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"></script>
+
+    <title>Nolan Castelain's website</title>
+    <style>
+        body {
+            overflow: hidden;
+            margin: 0;
+        }
+
+        #image-track {
+        display: flex;
+        position: absolute;
+        left: 50%;
+        top: 65%;
+        transform: translate(0%, -50%);
+        user-select: none;
+        gap: 1.5vmin;
+        z-index: 4000;
+        }
+
+        #image-track > .image  {
+        width: 40vmin;
+        height: 56vmin;
+        object-fit: cover;
+        object-position: 100% center;
+        transform: skewX(-10deg); /* Adjust the angle as needed */
+        transition: 0.3s;
+        }
+
+
+
+        .scroll-container >  #imageFirst {
+            position: relative;
+            left:5vmin;
+            transform: skewX(0deg); /* Adjust the angle as needed */
+
+            clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 0% 100%);
+        }
+        .scroll-container>  #imageLast {
+            position: relative;
+            right:5vmin;
+            transform: skewX(0deg); /* Adjust the angle as needed */
+            clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
+
+        }
+
+        .scroll-container > .image {
+        width: 40vmin;
+        height: 56vmin;
+        object-fit: cover;
+        object-position: 100% center;
+        transform: skewX(-10deg); /* Adjust the angle as needed */
+        transition: 0.3s;
+        }
+
+
+
+        .scroll-container > .image-textLight {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #f1f1f1;
+        font-size: 24px;
+        text-align: center;
+        z-index: 4001;
+        transition: 0.75s;
+        line-height: 2;
+        opacity: 0;
+        white-space: pre-line;
+
+        }
+
+
+
+        .scroll-container > .image-textDark {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #202020;
+        font-size: 24px;
+        text-align: center;
+        z-index: 4001;
+        transition: 0.75s;
+        line-height: 2;
+        opacity: 0;
+        white-space: pre-line;
+
+        }
+
+        .scroll-container:hover .image-textDark,
+        .scroll-container:hover .image-textLight {
+        opacity: 1;
+        animation: fadeIn 0.75s forwards;
+        }
+
+
+        .scroll-container:hover .image {
+        width: 47vmin;
+
+        transition: 0.53s ease;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0;}
+            27% {opacity: 0;}
+            100% {opacity: 1;}
+        }
+        @keyframes fadeOut {
+            0% { opacity: 100;}
+            73% {opacity: 0;}
+            100% {opacity: 0;}
+        }
+
+        .scroll-container {
+            position: relative;
+        }
+
+        #webgl-cube {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+
+
+
+        .menu {
+            background-color: rgb(109, 14, 109);
+            overflow: hidden;
+            position: relative;
+            z-index: 3;
+        }
+        .menu a {
+            float: right;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 0.4vw 2vw;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .menu a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .toggle-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            padding: 0px 0px;
+            z-index: 100;
+            background-color: #0000;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        .toggleText {
+            align-self: center;
+            margin : 0 10px;
+            color: white;
+        }
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <a href="contact.html">Me contacter</a>
+        <a href="passion.html">Mes passions</a>
+        <a href="https://github.com/Eskimo241">Github</a>
+        <a href="folio.html">Portfolio</a>
+        <a href="index.html">Home</a>
+    </div>
+<!-- TODO, when toggling, transition animation from foreground main projects going far in the distance, and mini coming foreground -->
+    <div class="toggle-container">
+        <span class="toggleText">Projets principaux</span>
+        <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+        </label>
+        <span class="toggleText">Mini projets</span>
+    </div>
+
+    <div id="image-track" data-mouse-down-at="0" data-prev-percentage="0">
+
+
+        <div class="scroll-container">
+
+            <img class="image" id="imageFirst" src="Comp 1000.jpg" draggable="false" />
+            <a href="screenCast.html" style="text-decoration: none;"class="image-textLight" draggable="false">Screen Cast (Python)</a>
+        </div>
+
+
+        <div class="scroll-container">
+            <img class="image" id="image" src="Comp 10.jpg" draggable="false" />
+            <a href="comm.html" style="text-decoration: none;"class="image-textDark">Database Browser (Python)</a>
+        </div>
+
+        <div class="scroll-container">
+            <img class="image" id="imageLast" src="Comp 1000.jpg" draggable="false" />
+            <a href="#WIP" style="text-decoration: none;"class="image-textLight">Mumuse avec les API (Python)</a>
+        </div>
+
+    </div>
+
+
+
+    <canvas id="webgl-cube"></canvas>
+    <script src="cubegl.js"></script>
+    <script>
+
+
+
+
+
+
+
+
+
+
+window.onload = function() {
+    var checkbox = document.querySelector('.switch input[type="checkbox"]');
+    checkbox.checked = true;
+    checkbox.addEventListener('change', function(){
+        if (this.checked){}
+        else{
+            window.location.href = "folio.html";
+        }
+    })
+}
+
+
+
+const track = document.getElementById("image-track");
+
+const handleOnDown = e => track.dataset.mouseDownAt = e.clientX;
+
+const handleOnUp = () => {
+  track.dataset.mouseDownAt = "0";
+  track.dataset.prevPercentage = track.dataset.percentage;
+}
+
+const handleOnMove = e => {
+  if(track.dataset.mouseDownAt === "0") return;
+
+  const mouseDelta = parseFloat(track.dataset.mouseDownAt) - e.clientX,
+        maxDelta = window.innerWidth / 2;
+
+  const percentage = (mouseDelta / maxDelta) * -100,
+        nextPercentageUnconstrained = parseFloat(track.dataset.prevPercentage) + percentage,
+        nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), -100);
+
+  track.dataset.percentage = nextPercentage;
+
+  track.animate({
+    transform: `translate(${nextPercentage}%, -50%)`
+  }, { duration: 1200, fill: "forwards" });
+
+  for(const image of track.getElementsByClassName("image")) {
+    image.animate({
+      objectPosition: `${100 + nextPercentage}% center`
+    }, { duration: 1200, fill: "forwards" });
+  }
+
+}
+
+/* -- Had to add extra lines for touch events -- */
+
+window.onmousedown = e => handleOnDown(e);
+
+window.ontouchstart = e => handleOnDown(e.touches[0]);
+
+window.onmouseup = e => handleOnUp(e);
+
+window.ontouchend = e => handleOnUp(e.touches[0]);
+
+window.onmousemove = e => handleOnMove(e);
+
+window.ontouchmove = e => handleOnMove(e.touches[0]);
+    </script>
+</body>
+</html>
