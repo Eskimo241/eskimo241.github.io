@@ -239,10 +239,19 @@
 
 
         <div class="rounded-box" id="Txt1" onclick="cycle(document.getElementById('Txt2'),document.getElementById('Txt3'),this)">
-            <h3>Hoy world! Moi c'est Nolan. A ce jour, je suis en première année de BUT Réseaux et Télécommunications. <p> Mon premier objectif pour l'instant est de trouver une entreprise pour une alternance. </p> Quant au long terme, je rêve de travailler dans la cybersécurité pour les satellites.
+            <h3> <em>*cliquez pour mes passions*</em></h3>
+        </div>
+        <div class="rounded-box" id="Txt1R" >
+            <h3>Hoy world! Moi c'est Nolan. A ce jour, je suis en seconde année de BUT Réseaux et Télécommunications en Alternance. <p> L'entreprise dans laquelle j'effectue mon Alternance est Thales Group </p> Mon objectif au long terme est de travailler dans la cybersécurité pour les satellites.
             </p></h3>
       <h4> <em>*cliquez pour mes passions*</em></h4>
         </div>
+        <div class="rounded-box" id="Txt1L" >
+            <h3>Hoy world! Moi c'est Nolan. A ce jour, je suis en seconde année de BUT Réseaux et Télécommunications en Alternance. <p> L'entreprise dans laquelle j'effectue mon Alternance est Thales Group </p> Mon objectif au long terme est de travailler dans la cybersécurité pour les satellites.
+            </p></h3>
+      <h4> <em>*cliquez pour mes passions*</em></h4>
+        </div>
+        
         <div class="rounded-box" id="Txt2" onclick="cycle(document.getElementById('Txt3'),document.getElementById('Txt1'),this)">
             <h3>Python, JavaScript et C sont des langages que je connais et m'amuse à utiliser de temps en temps.
                 Delphi, Kotlin, ActionScript ou encore Assembleur sont des langages dont je connais les bases après avoir eu à faire avec eux lors de précédent projets
@@ -318,6 +327,9 @@
 
                 txt2L.style.animation = "rotateFL 0.75s ease forwards";
                 txt2R.style.animation = "rotateFR 0.75s ease forwards";
+                txt1R.style.animation = "rotateBR 0.75s ease forwards";
+                txt1L.style.animation = "rotateBL 0.75s ease forwards";
+
                     break;
                 case "Txt3":
                 txt3L.style.display = 'flex';
@@ -333,6 +345,10 @@
                     if (load==1){
                         txt3L.style.animation = "rotateBL 0.75s ease forwards";
                         txt3R.style.animation = "rotateBR 0.75s ease forwards";
+                        txt1R.style.animation = "rotateFR 0.75s ease forwards";
+                        txt1L.style.animation = "rotateFL 0.75s ease forwards";
+
+
                     }
                     else {
                         load =1;
@@ -341,6 +357,10 @@
                         txt3R.style.display = 'none';
                         txt2L.style.display = 'none';
                         txt2R.style.display = 'none';
+                        txt1R.style.display = 'flex';
+                        txt1L.style.display = 'flex';
+                        txt1R.style.animation = "rotateFR 0.75s ease forwards";
+                        txt1L.style.animation = "rotateFL 0.75s ease forwards";
                     }
                     break;
             }
@@ -377,6 +397,8 @@ txt2L = document.getElementById('Txt2L');
 txt2R = document.getElementById('Txt2R');
 txt3L = document.getElementById('Txt3L');
 txt3R = document.getElementById('Txt3R');
+txt1R = document.getElementById('Txt1R');
+txt1L = document.getElementById('Txt1L');
 load = 0; //To prevent some animations because we're kinda cheating 
 
 cycle(document.getElementById('Txt1'),document.getElementById('Txt2'),document.getElementById('Txt3')); //Cheating because it would look horrible without it
