@@ -11,9 +11,19 @@
         body {
             overflow-x: hidden; /* Prevent horizontal scrollbar from flexbox */
             margin: 0;
-            background-color: #1e0c30; /* Consistent dark background */
+            background-color: #000000; /* Consistent dark background */
             color: #fdfcff; /* Light text for readability */
             font-family: Arial, sans-serif; /* A clean, readable font */
+        }
+
+        /* WebGL Canvas as background */
+        #glCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1; /* Send to background */
         }
 
         .menu {
@@ -38,6 +48,8 @@
         }
 
         .main-content {
+            position: relative; /* Ensure it's above the canvas */
+            z-index: 2; /* Keep it above the canvas but below the menu */
             display: flex;
             flex-wrap: wrap; /* Allows items to wrap to the next line */
             justify-content: center; /* Center the competence boxes */
@@ -52,6 +64,7 @@
             width: 40vw; /* Adjust width as needed, can be responsive */
             box-sizing: border-box; /* Include padding in width */
             margin-bottom: 2vw; /* Space below each category when wrapped */
+            opacity: 0.9;
         }
 
         .competence-category h2 {
@@ -59,12 +72,14 @@
             text-align: center;
             margin-top: 0;
             margin-bottom: 1.5vw;
+            opacity: 1;
         }
 
         .competence-category ul {
             list-style: none; /* Remove bullet points */
             padding: 0;
             margin: 0;
+            opacity: 1;
         }
 
         .competence-category li {
@@ -76,15 +91,18 @@
             display: flex;
             align-items: center;
             justify-content: space-between; /* Space out competence and level */
+            opacity: 1;
         }
 
         .competence-category li:last-child {
             margin-bottom: 0; /* No margin for the last item */
+            opacity: 1;
         }
 
         .competence-level {
             font-weight: bold;
             color: #ccc; /* Slightly lighter color for the level */
+            opacity: 1;
         }
 
         /* Responsive adjustments */
@@ -122,7 +140,7 @@
         <a href="https://eskimo241.github.io">Home</a>
     </div>
 
-    <div class="main-content">
+    <canvas id="glCanvas"></canvas> <div class="main-content">
         <div class="competence-category">
             <h2>Languages de Programmation</h2>
             <ul>
@@ -173,16 +191,16 @@
             </ul>
         </div>
 
-<div class="competence-category">
-    <h2>DevOps & CI/CD</h2>
-    <ul>
-        <li><span>**DevSecOps (Pipeline Jenkins vers GitLab CI, Maintenance)**</span> <span class="competence-level">Intermédiaire</span></li>
-        <li><span>GitLab CI/CD</span> <span class="competence-level">Intermédiaire</span></li>
-        <li><span>Principes DevOps & Automatisation</span> <span class="competence-level">Intermédiaire</span></li>
-        <li><span>Gestion & Sécurité des Serveurs de Test</span> <span class="competence-level">Intermédiaire</span></li>
-        <li><span>Intégration Continue / Livraison Continue (CI/CD)</span> <span class="competence-level">Intermédiaire</span></li>
-        </ul>
-</div>
+        <div class="competence-category">
+            <h2>DevOps & CI/CD</h2>
+            <ul>
+                <li><span>DevSecOps (Pipeline Jenkins vers GitLab CI, Maintenance)</span> <span class="competence-level">Intermédiaire</span></li>
+                <li><span>GitLab CI/CD</span> <span class="competence-level">Intermédiaire</span></li>
+                <li><span>Principes DevOps & Automatisation</span> <span class="competence-level">Intermédiaire</span></li>
+                <li><span>Gestion & Sécurité des Serveurs de Test</span> <span class="competence-level">Intermédiaire</span></li>
+                <li><span>Intégration Continue / Livraison Continue (CI/CD)</span> <span class="competence-level">Intermédiaire</span></li>
+            </ul>
+        </div>
 
         <div class="competence-category">
             <h2>Autres Compétences & Qualités Personnelles</h2>
@@ -192,10 +210,298 @@
                 <li><span>Création de Mods de Jeux</span> <span class="competence-level">Intermédiaire</span></li>
                 <li><span>Résolution de Problèmes</span> <span class="competence-level">Avancé</span></li>
                 <li><span>Curiosité & Intérêt pour le Matériel Informatique</span> <span class="competence-level">Très bon</span></li>
-                <li><span>Professionnalisme & Communication</span> <span class="competence-level">Très bon</span></li>
+                <li><span>Professionnalisme & Communication (Malgré l'anxiété)</span> <span class="competence-level">Très bon</span></li>
                 <li><span>Anglais</span> <span class="competence-level">Très bon</span></li>
             </ul>
         </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"></script>
+    <script>
+        // Main WebGL code for the wireframe dodecahedron
+        const canvas = document.getElementById('glCanvas');
+        const gl = canvas.getContext('webgl');
+
+        if (!gl) {
+            alert('Unable to initialize WebGL. Your browser or machine may not support it.');
+        }
+
+        // Set up the canvas resolution
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Vertex shader program
+        const vsSource = `
+            attribute vec4 aVertexPosition;
+            attribute vec4 aVertexColor; // New attribute for color
+            uniform mat4 uModelViewMatrix;
+            uniform mat4 uProjectionMatrix;
+            varying lowp vec4 vColor; // Pass color to fragment shader
+            void main() {
+                gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
+                vColor = aVertexColor; // Pass the color through
+            }
+        `;
+
+        // Fragment shader program
+        const fsSource = `
+            varying lowp vec4 vColor; // Receive color from vertex shader
+            void main() {
+                gl_FragColor = vColor; // Use the interpolated color
+            }
+        `;
+
+        function initShader(gl, type, source) {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                alert('An error occurred compiling the shaders: ' + gl.getShaderInfoLog(shader));
+                gl.deleteShader(shader);
+                return null;
+            }
+            return shader;
+        }
+
+        function initShaderProgram(gl, vsSource, fsSource) {
+            const vertexShader = initShader(gl, gl.VERTEX_SHADER, vsSource);
+            const fragmentShader = initShader(gl, gl.FRAGMENT_SHADER, fsSource);
+
+            const shaderProgram = gl.createProgram();
+            gl.attachShader(shaderProgram, vertexShader);
+            gl.attachShader(shaderProgram, fragmentShader);
+            gl.linkProgram(shaderProgram);
+
+            if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+                alert('Unable to initialize the shader program: ' + gl.getProgramInfoLog(shaderProgram));
+                return null;
+            }
+            return shaderProgram;
+        }
+
+        const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
+        const programInfo = {
+            program: shaderProgram,
+            attribLocations: {
+                vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
+                vertexColor: gl.getAttribLocation(shaderProgram, 'aVertexColor'), // Get color attribute location
+            },
+            uniformLocations: {
+                projectionMatrix: gl.getUniformLocation(shaderProgram, 'uProjectionMatrix'),
+                modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
+                // uColor is no longer needed as color comes from attribute
+            },
+        };
+
+        // Create a dodecahedron (wireframe) with colors
+        function initBuffers(gl) {
+            const phi = (1 + Math.sqrt(5)) / 2; // Golden ratio
+            const scale = 0.5; // Scale down for better viewing
+
+            // Vertices of a regular dodecahedron
+            const vertices_dodec_raw = [
+                1.0, 1.0, 1.0,
+                1.0, 1.0, -1.0,
+                1.0, -1.0, 1.0,
+                1.0, -1.0, -1.0,
+                -1.0, 1.0, 1.0,
+                -1.0, 1.0, -1.0,
+                -1.0, -1.0, 1.0,
+                -1.0, -1.0, -1.0,
+
+                0.0, 1.0/phi, phi,
+                0.0, 1.0/phi, -phi,
+                0.0, -1.0/phi, phi,
+                0.0, -1.0/phi, -phi,
+
+                1.0/phi, phi, 0.0,
+                1.0/phi, -phi, 0.0,
+                -1.0/phi, phi, 0.0,
+                -1.0/phi, -phi, 0.0,
+
+                phi, 0.0, 1.0/phi,
+                phi, 0.0, -1.0/phi,
+                -phi, 0.0, 1.0/phi,
+                -phi, 0.0, -1.0/phi
+            ];
+
+            const vertices_dodec = vertices_dodec_raw.map(coord => coord * scale);
+
+            const positionBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices_dodec), gl.STATIC_DRAW);
+
+            // Generate colors based on Y-coordinate for a gradient effect
+            const colors_dodec = [];
+            const color1 = [109/255, 14/255, 109/255, 0.7]; // Purple (color1 from CSS, with some alpha)
+            const color2 = [255/255, 0/255, 0/255, 0.7];   // Red (color2 from CSS, with some alpha)
+            
+            // Find min/max Y for normalization
+            let minY = Infinity;
+            let maxY = -Infinity;
+            for (let i = 0; i < vertices_dodec.length; i += 3) {
+                const y = vertices_dodec[i+1];
+                if (y < minY) minY = y;
+                if (y > maxY) maxY = y;
+            }
+            const yRange = maxY - minY;
+
+            for (let i = 0; i < vertices_dodec.length; i += 3) {
+                const y = vertices_dodec[i+1];
+                const normalizedY = (y - minY) / yRange; // 0 to 1
+                
+                // Interpolate colors
+                for (let c = 0; c < 4; c++) { // R, G, B, Alpha
+                    colors_dodec.push(color1[c] * (1 - normalizedY) + color2[c] * normalizedY);
+                }
+            }
+
+            const colorBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors_dodec), gl.STATIC_DRAW);
+
+            // Indices for the 30 edges of a dodecahedron (60 indices total)
+            const indices_dodec = [
+                0, 8,    0, 12,   0, 16,
+                1, 9,    1, 12,   1, 17,
+                2, 10,   2, 13,   2, 16,
+                3, 11,   3, 13,   3, 17,
+                4, 8,    4, 14,   4, 18,
+                5, 9,    5, 14,   5, 19,
+                6, 10,   6, 15,   6, 18,
+                7, 11,   7, 15,   7, 19,
+
+                8, 10,   // (0, 1/phi, phi) to (0, -1/phi, phi)
+                9, 11,   // (0, 1/phi, -phi) to (0, -1/phi, -phi)
+
+                12, 14,  // (1/phi, phi, 0) to (-1/phi, phi, 0)
+                13, 15,  // (1/phi, -phi, 0) to (-1/phi, -phi, 0)
+
+                16, 17,  // (phi, 0, 1/phi) to (phi, 0, -1/phi)
+                18, 19   // (-phi, 0, 1/phi) to (-phi, 0, -1/phi)
+            ];
+
+            const indexBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+            gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices_dodec), gl.STATIC_DRAW);
+
+            return {
+                position: positionBuffer,
+                color: colorBuffer, // Return color buffer
+                indices: indexBuffer,
+                vertexCount: indices_dodec.length
+            };
+        }
+
+        const buffers = initBuffers(gl);
+
+        let dodecahedronScrollRotationY = 0.0;
+        let dodecahedronContinuousRotationX = 0.0; // For a subtle continuous rotation
+        let lastTime = 0;
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY || document.documentElement.scrollTop;
+            // Map scroll position to rotation. Adjust factor for speed.
+            dodecahedronScrollRotationY = scrollY * 0.003; // Rotate around Y based on scroll
+        });
+
+        function drawScene(now) {
+            now *= 0.001; // convert to seconds
+            const deltaTime = now - lastTime;
+            lastTime = now;
+
+            gl.clearColor(0.0, 0.0, 0.0, 0.0); // Clear the canvas with transparent background
+            gl.clearDepth(1.0); // Clear everything
+            gl.enable(gl.DEPTH_TEST); // Enable depth testing
+            gl.depthFunc(gl.LEQUAL); // Near things obscure far things
+
+            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+            const fieldOfView = 45 * Math.PI / 180; // in radians
+            const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+            const zNear = 0.1;
+            const zFar = 100.0;
+            const projectionMatrix = mat4.create();
+
+            mat4.perspective(projectionMatrix,
+                             fieldOfView,
+                             aspect,
+                             zNear,
+                             zFar);
+
+            const modelViewMatrix = mat4.create();
+
+            mat4.translate(modelViewMatrix,     // destination matrix
+                           modelViewMatrix,     // matrix to translate
+                           [-0.0, 0.0, -6.0]);  // amount to translate (move dodecahedron back)
+
+            // Apply scroll-based Y rotation
+            mat4.rotate(modelViewMatrix,
+                        modelViewMatrix,
+                        dodecahedronScrollRotationY,
+                        [0, 1, 0]); // Y axis
+
+            // Apply a subtle continuous X rotation
+            mat4.rotate(modelViewMatrix,
+                        modelViewMatrix,
+                        dodecahedronContinuousRotationX,
+                        [1, 0, 0]); // X axis
+
+            // Position buffer setup
+            gl.bindBuffer(gl.ARRAY_BUFFER, buffers.position);
+            gl.vertexAttribPointer(
+                programInfo.attribLocations.vertexPosition,
+                3, // numComponents (x, y, z)
+                gl.FLOAT, // type
+                false, // normalize
+                0, // stride
+                0 // offset
+            );
+            gl.enableVertexAttribArray(programInfo.attribLocations.vertexPosition);
+
+            // Color buffer setup
+            gl.bindBuffer(gl.ARRAY_BUFFER, buffers.color); // Bind color buffer
+            gl.vertexAttribPointer(
+                programInfo.attribLocations.vertexColor, // Use color attribute location
+                4, // numComponents (r, g, b, a)
+                gl.FLOAT, // type
+                false, // normalize
+                0, // stride
+                0 // offset
+            );
+            gl.enableVertexAttribArray(programInfo.attribLocations.vertexColor); // Enable color attribute
+
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indices);
+
+            gl.useProgram(programInfo.program);
+
+            gl.uniformMatrix4fv(
+                programInfo.uniformLocations.projectionMatrix,
+                false,
+                projectionMatrix
+            );
+            gl.uniformMatrix4fv(
+                programInfo.uniformLocations.modelViewMatrix,
+                false,
+                modelViewMatrix
+            );
+
+            // gl.uniform4fv(programInfo.uniformLocations.uColor, ...) is removed, color comes from attribute
+
+            gl.drawElements(gl.LINES, buffers.vertexCount, gl.UNSIGNED_SHORT, 0);
+
+            // Update continuous rotation for the next frame
+            dodecahedronContinuousRotationX += deltaTime * 0.1; // Slow continuous rotation on X axis
+
+            requestAnimationFrame(drawScene);
+        }
+
+        requestAnimationFrame(drawScene);
+    </script>
 </body>
 </html>
