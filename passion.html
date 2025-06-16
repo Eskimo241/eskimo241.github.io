@@ -1,19 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Nolan Castelain's website</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"></script>
+
+    <title>Nolan Castelain's Passions</title>
     <style>
+        html, body {
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
+        }
+        :root {
+            --color1: rgb(109, 14, 109);
+            --color2: rgb(255, 0, 0);
+            transition: --color1 1s, --color2 1s;
+        }
         body {
-            overflow: hidden;
+            overflow-x: hidden; /* Prevent horizontal scrollbar from flexbox */
             margin: 0;
-            background-color: #1e0c30;
+            background-color: #000000; /* Black background */
+            color: #fdfcff; /* Light text for readability */
+            font-family: Arial, sans-serif; /* A clean, readable font */
+        }
+
+        /* WebGL Canvas as background */
+        #glCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1; /* Send to background */
         }
 
         .menu {
-            background-color: rgb(109, 14, 109);
+            background: linear-gradient(to right, var(--color1), var(--color2)); /* Gradient background from index.html */
             overflow: hidden;
+            background-size: 200% 200%; /* For animation if you add it later */
             position: relative;
             z-index: 3;
+            opacity: 1; /* Default opacity */
+            transition: opacity 0.5s ease-in-out; /* Smooth transition for opacity changes */
         }
         .menu a {
             float: right;
@@ -29,26 +54,449 @@
             color: black;
         }
 
+        .main-content {
+            position: relative; /* Ensure it's above the canvas */
+            z-index: 2; /* Keep it above the canvas but below the menu */
+            display: flex;
+            flex-wrap: wrap; /* Allows items to wrap to the next line */
+            justify-content: center; /* Center the passion boxes */
+            padding: 2vw;
+            gap: 2vw; /* Space between passion boxes */
+        }
+
+        .passion-category { /* Similar styling to competence-category */
+            background-color: #351258; /* Darker purple */
+            border-radius: 20px;
+            padding: 2vw;
+            width: 40vw; /* Adjust width as needed, can be responsive */
+            box-sizing: border-box; /* Include padding in width */
+            margin-bottom: 2vw; /* Space below each category when wrapped */
+            max-width: 600px; /* Limit max width for better readability */
+            opacity: 1; /* Default opacity */
+            transition: opacity 0.5s ease-in-out; /* Smooth transition for opacity changes */
+        }
+
+        .passion-category h2 {
+            color: #fdfcff;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 1.5vw;
+        }
+
+        .passion-category p {
+            color: #ccc; /* Slightly lighter text for readability */
+            font-size: 1.1vw; /* Responsive font size */
+            line-height: 1.6;
+            margin-bottom: 1vw;
+        }
+
+        .passion-category p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Button for toggling opacity */
+        #opacityToggleButton {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #555;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 10; /* Ensure it's above other content */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            transition: background-color 0.3s ease;
+        }
+
+        #opacityToggleButton:hover {
+            background-color: #777;
+        }
 
 
-        
+        /* Responsive adjustments */
+        @media screen and (max-width: 1024px) {
+            .passion-category {
+                width: 45vw;
+                padding: 3vw;
+            }
+            .passion-category h2 {
+                font-size: 2vw;
+            }
+            .passion-category p {
+                font-size: 1.4vw;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .main-content {
+                flex-direction: column; /* Stack categories on smaller screens */
+                align-items: center;
+                padding: 5vw 2vw; /* More padding on smaller screens */
+            }
+            .passion-category {
+                width: 80vw; /* Wider for better readability on small screens */
+                padding: 5vw;
+            }
+            .passion-category h2 {
+                font-size: 4.5vw;
+                margin-bottom: 3vw;
+            }
+            .passion-category p {
+                font-size: 3.2vw;
+                margin-bottom: 2.5vw;
+            }
+            #opacityToggleButton {
+                bottom: 10px;
+                left: 10px;
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+        }
+
     </style>
 </head>
 <body>
     <div class="menu">
         <a href="contact.html">Me contacter</a>
         <a href="passion.html">Mes passions</a>
-        <a href=" competences.html">Mes compétences</a>
+        <a href="competences.html">Mes compétences</a>
         <a href="https://github.com/Eskimo241">Github</a>
         <a href="folio.html">Portfolio</a>
         <a href="https://eskimo241.github.io">Home</a>
     </div>
-    <div class ="MainTxt">
-        <h1>Ma passion : Que mettre ici ?</h1>
+
+    <canvas id="glCanvas"></canvas> <div class="main-content">
+        <div class="passion-category">
+            <h2>Modding de jeux vidéos</h2>
+            <p>Je suis un grand fan de l'univers du modding, une passion qui me permet d'explorer les limites de la créativité et de la personnalisation numérique. J'ai eu l'occasion de travailler sur différents jeux comme Minecraft et Terraria, où j'ai pu développer des compétences en Reverse Engineering et en programmation C#. J'ai même fait du "modding" pour Monster Hunter Frontier en modifiant des valeurs hexadécimales dans des fichiers de jeu. Cette immersion dans le code source des jeux m'a appris à comprendre les rouages complexes des logiciels, à optimiser les performances et à créer des expériences de jeu uniques.</p>
+            <p>Cette passion m'a également permis d'acquérir une compréhension approfondie des architectures logicielles et de l'importance de la documentation. Le modding est une excellente manière d'apprendre par la pratique et de développer un esprit critique face aux technologies existantes.</p>
+        </div>
+
+        <div class="passion-category">
+            <h2>Programmation spatiale</h2>
+            <p>Je suis passionné par la programmation liée à l'espace. Actuellement, je travaille sur un projet nommé "CurioPy", qui vise à afficher en continu les images récemment récupérées via l'API de la NASA, ainsi que des données provenant de la NOAA et des satellites GOES. Cette immersion dans les données spatiales me permet de combiner ma passion pour l'astronomie avec mes compétences en développement. J'adore vraiment l'espace !</p>
+            <p>Ce type de projet développe ma capacité à interagir avec des APIs externes, à traiter et visualiser des données complexes, et à comprendre les systèmes liés à l'observation terrestre et spatiale.</p>
+        </div>
+
+        <div class="passion-category">
+            <h2>Lecture, Musique & Divertissement</h2>
+            <p>Je suis un grand amateur de lecture, de musique et de divers divertissements. En ce moment, je lis "L'Enfer" de Dante et je prévois de lire "Dogra Magra". Je joue de la guitare, du banjo et de l'harmonica, et j'écoute toutes sortes de musique, explorant constamment de nouveaux genres et artistes. J'apprécie également beaucoup "Jojo's Bizarre Adventure" pour toutes les références culturelles et musicales qu'on y trouve.</p>
+            <p>Ces activités me permettent de me détendre, de m'ouvrir à de nouvelles idées et de stimuler ma créativité, tout en maintenant un équilibre essentiel entre ma vie professionnelle et ma vie personnelle.</p>
+        </div>
     </div>
 
-    
+    <button id="opacityToggleButton">Cacher les menus, et admirer la vue</button>
 
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"></script>
+    <script>
+        const canvas = document.getElementById('glCanvas');
+        const gl = canvas.getContext('webgl');
+
+        if (!gl) {
+            alert('Unable to initialize WebGL. Your browser or machine may not support it.');
+        }
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const vsSource = `
+            attribute vec4 aVertexPosition;
+            attribute vec4 aVertexColor;
+            uniform mat4 uModelViewMatrix;
+            uniform mat4 uProjectionMatrix;
+            varying lowp vec4 vColor;
+            void main() {
+                gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
+                vColor = aVertexColor;
+            }
+        `;
+
+        const fsSource = `
+            varying lowp vec4 vColor;
+            void main() {
+                gl_FragColor = vColor;
+            }
+        `;
+
+        function initShader(gl, type, source) {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                alert('An error occurred compiling the shaders: ' + gl.getShaderInfoLog(shader));
+                gl.deleteShader(shader);
+                return null;
+            }
+            return shader;
+        }
+
+        function initShaderProgram(gl, vsSource, fsSource) {
+            const vertexShader = initShader(gl, gl.VERTEX_SHADER, vsSource);
+            const fragmentShader = initShader(gl, gl.FRAGMENT_SHADER, fsSource);
+
+            const shaderProgram = gl.createProgram();
+            gl.attachShader(shaderProgram, vertexShader);
+            gl.attachShader(shaderProgram, fragmentShader);
+            gl.linkProgram(shaderProgram);
+
+            if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+                alert('Unable to initialize the shader program: ' + gl.getProgramInfoLog(shaderProgram));
+                return null;
+            }
+            return shaderProgram;
+        }
+
+        const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
+        const programInfo = {
+            program: shaderProgram,
+            attribLocations: {
+                vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
+                vertexColor: gl.getAttribLocation(shaderProgram, 'aVertexColor'),
+            },
+            uniformLocations: {
+                projectionMatrix: gl.getUniformLocation(shaderProgram, 'uProjectionMatrix'),
+                modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
+            },
+        };
+
+        // 16 vertices of the tesseract (in 4D)
+        const originalTesseractVertices4D = [
+            [-1, -1, -1, -1], [ 1, -1, -1, -1], [-1,  1, -1, -1], [ 1,  1, -1, -1],
+            [-1, -1,  1, -1], [ 1, -1,  1, -1], [-1,  1,  1, -1], [ 1,  1,  1, -1],
+            [-1, -1, -1,  1], [ 1, -1, -1,  1], [-1,  1, -1,  1], [ 1,  1, -1,  1],
+            [-1, -1,  1,  1], [ 1, -1,  1,  1], [-1,  1,  1,  1], [ 1,  1,  1,  1]
+        ];
+
+        // Edges of the tesseract (indices connecting 3D projected vertices)
+        const tesseractIndices = [
+            // Inner cube
+            0, 1, 0, 2, 1, 3, 2, 3, // Face 1
+            4, 5, 4, 6, 5, 7, 6, 7, // Face 2
+            0, 4, 1, 5, 2, 6, 3, 7, // Connecting edges
+
+            // Outer cube
+            8, 9, 8, 10, 9, 11, 10, 11, // Face 3
+            12, 13, 12, 14, 13, 15, 14, 15, // Face 4
+            8, 12, 9, 13, 10, 14, 11, 15, // Connecting edges
+
+            // Connecting inner to outer cube
+            0, 8, 1, 9, 2, 10, 3, 11,
+            4, 12, 5, 13, 6, 14, 7, 15
+        ];
+
+        function initBuffers(gl) {
+            const positionBuffer = gl.createBuffer();
+            const colorBuffer = gl.createBuffer();
+            const indexBuffer = gl.createBuffer();
+
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+            gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(tesseractIndices), gl.STATIC_DRAW);
+
+            return {
+                position: positionBuffer,
+                color: colorBuffer,
+                indices: indexBuffer,
+                vertexCount: tesseractIndices.length
+            };
+        }
+
+        const buffers = initBuffers(gl);
+
+        let tesseractScrollRotationY = 0.0;
+        let rotationAngleXW = 0.0; // Rotation in XW plane
+        let rotationAngleYZ = 0.0; // Rotation in YZ plane
+        let lastTime = 0;
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY || document.documentElement.scrollTop;
+            tesseractScrollRotationY = scrollY * 0.003; // Adjust multiplier for desired effect
+        });
+
+        // Function to rotate a 4D point in a given plane
+        function rotate4D(point, angle, plane) {
+            let x = point[0], y = point[1], z = point[2], w = point[3];
+            let newX, newY, newZ, newW;
+            const cosA = Math.cos(angle);
+            const sinA = Math.sin(angle);
+
+            switch (plane) {
+                case 'XW':
+                    newX = x * cosA - w * sinA;
+                    newW = x * sinA + w * cosA;
+                    return [newX, y, z, newW];
+                case 'YZ':
+                    newY = y * cosA - z * sinA;
+                    newZ = y * sinA + z * cosA;
+                    return [x, newY, newZ, w];
+                default:
+                    return point;
+            }
+        }
+
+        // Function to project 4D points to 3D for rendering
+        function project4Dto3D(point4D) {
+            const x = point4D[0];
+            const y = point4D[1];
+            const z = point4D[2];
+            const w = point4D[3];
+
+            // A simple perspective projection from 4D to 3D
+            // Adjust 'wScale' to change the visual depth/perspective of the tesseract
+            const wScale = 1.5; 
+            const projectedX = x / (wScale - w);
+            const projectedY = y / (wScale - w);
+            const projectedZ = z / (wScale - w); // Z is retained as depth for 3D rendering
+
+            return [projectedX, projectedY, projectedZ];
+        }
+
+        function drawScene(now) {
+            now *= 0.001; // Convert to seconds
+            const deltaTime = now - lastTime;
+            lastTime = now;
+
+            gl.clearColor(0.0, 0.0, 0.0, 1.0); // Black background
+            gl.clearDepth(1.0);
+            gl.enable(gl.DEPTH_TEST);
+            gl.depthFunc(gl.LEQUAL);
+
+            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+            const fieldOfView = 45 * Math.PI / 180; // in radians
+            const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+            const zNear = 0.1;
+            const zFar = 100.0;
+            const projectionMatrix = mat4.create();
+
+            mat4.perspective(projectionMatrix,
+                             fieldOfView,
+                             aspect,
+                             zNear,
+                             zFar);
+
+            const modelViewMatrix = mat4.create();
+
+            // Translate the camera/object away from the origin
+            mat4.translate(modelViewMatrix,     // destination matrix
+                           modelViewMatrix,     // matrix to translate
+                           [0.0, 0.0, -6.0]);   // amount to translate
+
+            // Apply scroll-based 3D rotation (around Y-axis)
+            mat4.rotate(modelViewMatrix,
+                        modelViewMatrix,
+                        tesseractScrollRotationY,
+                        [0, 1, 0]);
+
+
+            // --- Perform 4D rotations and projection on CPU ---
+            const currentTesseractVertices3D = [];
+            const colors_tesseract = [];
+            
+            // Define colors to interpolate between
+            const colorStart = [109 / 255, 14 / 255, 109 / 255, 0.7]; // Purple
+            const colorEnd = [255 / 255, 0 / 255, 0 / 255, 0.7];   // Red
+
+            // First pass: Apply 4D rotations and get projected 3D vertices
+            const rotatedVertices4D = originalTesseractVertices4D.map(v => {
+                let tempV = v;
+                tempV = rotate4D(tempV, rotationAngleXW, 'XW'); // Rotate in XW plane
+                tempV = rotate4D(tempV, rotationAngleYZ, 'YZ'); // Rotate in YZ plane
+                return tempV;
+            });
+            
+            let minY = Infinity;
+            let maxY = -Infinity;
+
+            for (const v4d of rotatedVertices4D) {
+                const projectedV3D = project4Dto3D(v4d);
+                currentTesseractVertices3D.push(...projectedV3D);
+                // Track min/max Y for color interpolation *after* projection
+                const y = projectedV3D[1];
+                if (y < minY) minY = y;
+                if (y > maxY) maxY = y;
+            }
+
+            const yRange = maxY - minY;
+            // Second pass: Generate colors based on the *projected* Y coordinate
+            for (let i = 0; i < currentTesseractVertices3D.length; i += 3) {
+                const y = currentTesseractVertices3D[i+1];
+                const normalizedY = yRange === 0 ? 0.5 : (y - minY) / yRange; // 0 to 1, handle division by zero
+                for (let c = 0; c < 4; c++) { // R, G, B, Alpha
+                    colors_tesseract.push(colorStart[c] * (1 - normalizedY) + colorEnd[c] * normalizedY);
+                }
+            }
+
+
+            // Update position buffer (DYNAMIC_DRAW because data changes per frame)
+            gl.bindBuffer(gl.ARRAY_BUFFER, buffers.position);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(currentTesseractVertices3D), gl.DYNAMIC_DRAW);
+            gl.vertexAttribPointer(
+                programInfo.attribLocations.vertexPosition,
+                3, gl.FLOAT, false, 0, 0);
+            gl.enableVertexAttribArray(programInfo.attribLocations.vertexPosition);
+
+            // Update color buffer (DYNAMIC_DRAW because colors change with projection)
+            gl.bindBuffer(gl.ARRAY_BUFFER, buffers.color);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors_tesseract), gl.DYNAMIC_DRAW);
+            gl.vertexAttribPointer(
+                programInfo.attribLocations.vertexColor,
+                4, gl.FLOAT, false, 0, 0);
+            gl.enableVertexAttribArray(programInfo.attribLocations.vertexColor);
+
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indices);
+
+            gl.useProgram(programInfo.program);
+
+            gl.uniformMatrix4fv(
+                programInfo.uniformLocations.projectionMatrix,
+                false,
+                projectionMatrix
+            );
+            gl.uniformMatrix4fv(
+                programInfo.uniformLocations.modelViewMatrix,
+                false,
+                modelViewMatrix
+            );
+
+            gl.drawElements(gl.LINES, buffers.vertexCount, gl.UNSIGNED_SHORT, 0);
+
+            // Update continuous 4D rotation angles
+            const rotationSpeed = 0.05; // Adjust this for faster/slower 4D rotation
+            rotationAngleXW += deltaTime * rotationSpeed;
+            rotationAngleYZ += deltaTime * rotationSpeed * 0.7; // Different speed for a more complex look
+
+            requestAnimationFrame(drawScene);
+        }
+
+        requestAnimationFrame(drawScene);
+
+        // JavaScript for the toggle button
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleButton = document.getElementById('opacityToggleButton');
+            const passionCategories = document.querySelectorAll('.passion-category');
+            const menu = document.querySelector('.menu'); // Get the menu bar
+
+            let isVisible = true; // Initial state for visibility
+
+            toggleButton.addEventListener('click', () => {
+                isVisible = !isVisible; // Toggle state
+
+                passionCategories.forEach(category => {
+                    category.style.opacity = isVisible ? '0.9' : '0';
+                });
+
+                menu.style.opacity = isVisible ? '1' : '0'; // Toggle menu bar opacity
+            });
+        });
+
+    </script>
 </body>
 </html>
