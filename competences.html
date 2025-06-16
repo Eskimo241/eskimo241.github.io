@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nolan Castelain's Competences</title>
+    <style>
+        :root {
+            --color1: rgb(109, 14, 109);
+            --color2: rgb(255, 0, 0);
+            transition: --color1 1s, --color2 1s;
+        }
+        body {
+            overflow-x: hidden; /* Prevent horizontal scrollbar from flexbox */
+            margin: 0;
+            background-color: #1e0c30; /* Consistent dark background */
+            color: #fdfcff; /* Light text for readability */
+            font-family: Arial, sans-serif; /* A clean, readable font */
+        }
+
+        .menu {
+            background: linear-gradient(to right, var(--color1), var(--color2)); /* Gradient background from index.html */
+            overflow: hidden;
+            background-size: 200% 200%; /* For animation if you add it later */
+            position: relative;
+            z-index: 3;
+        }
+        .menu a {
+            float: right;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 0.4vw 2vw;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .menu a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .main-content {
+            display: flex;
+            flex-wrap: wrap; /* Allows items to wrap to the next line */
+            justify-content: center; /* Center the competence boxes */
+            padding: 2vw;
+            gap: 2vw; /* Space between competence boxes */
+        }
+
+        .competence-category {
+            background-color: #351258; /* Darker purple, similar to 'back' in thales.html */
+            border-radius: 20px;
+            padding: 2vw;
+            width: 40vw; /* Adjust width as needed, can be responsive */
+            box-sizing: border-box; /* Include padding in width */
+            margin-bottom: 2vw; /* Space below each category when wrapped */
+        }
+
+        .competence-category h2 {
+            color: #fdfcff;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 1.5vw;
+        }
+
+        .competence-category ul {
+            list-style: none; /* Remove bullet points */
+            padding: 0;
+            margin: 0;
+        }
+
+        .competence-category li {
+            background-color: #0b0413; /* Even darker for individual items */
+            margin-bottom: 1vw;
+            padding: 1vw 1.5vw;
+            border-radius: 10px;
+            font-size: 1.2vw; /* Responsive font size */
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Space out competence and level */
+        }
+
+        .competence-category li:last-child {
+            margin-bottom: 0; /* No margin for the last item */
+        }
+
+        .competence-level {
+            font-weight: bold;
+            color: #ccc; /* Slightly lighter color for the level */
+        }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 1024px) {
+            .competence-category {
+                width: 45vw;
+            }
+            .competence-category li {
+                font-size: 1.5vw;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .main-content {
+                flex-direction: column; /* Stack categories on smaller screens */
+                align-items: center;
+            }
+            .competence-category {
+                width: 80vw; /* Wider for better readability on small screens */
+            }
+            .competence-category li {
+                font-size: 3vw;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <a href="contact.html">Me contacter</a>
+        <a href="passion.html">Mes passions</a>
+        <a href="competences.html">Mes compétences</a>
+        <a href="https://github.com/Eskimo241">Github</a>
+        <a href="folio.html">Portfolio</a>
+        <a href="https://eskimo241.github.io">Home</a>
+    </div>
+
+    <div class="main-content">
+        <div class="competence-category">
+            <h2>Languages de Programmation</h2>
+            <ul>
+                <li><span>C#</span> <span class="competence-level">Avancé</span></li>
+                <li><span>Python</span> <span class="competence-level">Avancé</span></li>
+                <li><span>JavaScript</span> <span class="competence-level">Intermédiaire</span></li>
+                <li><span>Java</span> <span class="competence-level">Intermédiaire</span></li>
+                <li><span>C</span> <span class="competence-level">Bases - Intermédiaire</span></li>
+                <li><span>Delphi</span> <span class="competence-level">Bases</span></li>
+                <li><span>Kotlin</span> <span class="competence-level">Bases</span></li>
+                <li><span>ActionScript</span> <span class="competence-level">Bases</span></li>
+                <li><span>Assembleur</span> <span class="competence-level">Assez pour du Reverse Engineering</span></li>
+            </ul>
+        </div>
+
+        <div class="competence-category">
+            <h2>Outils & Technologies</h2>
+            <ul>
+                <li><span>Git / GitHub / Gitlab</span> <span class="competence-level">Avancé</span></li>
+                <li><span>SQL (PostgreSQL, MySQL)</span> <span class="competence-level">Intermédiaire</span></li>
+                <li><span>HTML5 / CSS3</span> <span class="competence-level">Intermédiaire</span></li>
+                <li><span>IntelliJ / VS Code</span> <span class="competence-level">Avancé</span></li>
+                <li><span>Docker</span> <span class="competence-level">Intermédiaire</span></li>
+                <li><span>Maven / Gradle</span> <span class="competence-level">Bases - Intermédiaire</span></li>
+                <li><span>OpenCV</span> <span class="competence-level">Bases</span></li>
+                <li><span>Android Studio (Développement Android & PHP Server)</span> <span class="competence-level">Intermédiaire</span></li>
+                <li><span>ESP32</span> <span class="competence-level">Débutant</span></li>
+            </ul>
+        </div>
+
+        <div class="competence-category">
+            <h2>Systèmes d'exploitation & Réseaux</h2>
+            <ul>
+                <li><span>Windows</span> <span class="competence-level">Avancé</span></li>
+                <li><span>Linux (Debian/Ubuntu)</span> <span class="competence-level">Avancé</span></li>
+                <li><span>Administration Serveur Linux</span> <span class="competence-level">Avancé</span></li>
+                <li><span>Concepts Réseaux (TCP/IP, Routage)</span> <span class="competence-level">Intermédiaire</span></li>
+            </ul>
+        </div>
+
+        <div class="competence-category">
+            <h2>Sécurité & Cybersécurité</h2>
+            <ul>
+                <li><span>OSINT (Open Source Intelligence)</span> <span class="competence-level">Intermédiaire</span></li>
+                <li><span>Pentesting (Tests d'intrusion)</span> <span class="competence-level">Intermédiaire</span></li>
+                <li><span>Reverse Engineering</span> <span class="competence-level">Intermédiaire</span></li>
+            </ul>
+        </div>
+
+        <div class="competence-category">
+            <h2>Autres Compétences & Qualités Personnelles</h2>
+            <ul>
+                <li><span>Développement Web Frontend</span> <span class="competence-level">Intermédiaire</span></li>
+                <li><span>Développement de Bots Discord</span> <span class="competence-level">Intermédiaire</span></li>
+                <li><span>Création de Mods de Jeux</span> <span class="competence-level">Intermédiaire</span></li>
+                <li><span>Résolution de Problèmes</span> <span class="competence-level">Avancé</span></li>
+                <li><span>Curiosité & Intérêt pour le Matériel Informatique</span> <span class="competence-level">Très bon</span></li>
+                <li><span>Professionnalisme & Communication</span> <span class="competence-level">Très bon</span></li>
+                <li><span>Anglais</span> <span class="competence-level">Très bon</span></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
